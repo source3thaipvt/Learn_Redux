@@ -29,32 +29,79 @@ const actions = [
   { type: "TURN_ON" }, // speed: 3, lastSpeed: 3
 ];
 
-const initState = { // la 1 State
+const initState = {
+  // la 1 State
   speed: 0,
   lastSpeed: 1,
 };
 
-const test3 = reduce(actions, (state, action) => {
+const test3 = reduce(
+  actions,
+  (state, action) => {
+    switch (action.type) {
+      case "CHANGE_SPEED":
+        return {
+          ...state,
+          speed: action.payload,
+        };
+        break;
+      case "TURN_OFF":
+        return {
+          ...state,
+          speed: 0,
+          lastSpeed: state.speed,
+        };
+        break;
+      case "TURN_ON":
+        return {
+          ...state,
+          speed: state.lastSpeed,
+        };
+      default:
+        return state;
+    }
+  },
+  initState
+);
+console.log(test3);
+
+const { createStore } = require("redux");
+
+const initState2 = {
+  // la 1 State
+  speed: 0,
+  lastSpeed: 1,
+};
+
+const reducer = (state = initState2, action) => {
+    console.log(action) // { type: '@@redux/INITe.d.6.9.k.a' }
   switch (action.type) {
     case "CHANGE_SPEED":
       return {
         ...state,
         speed: action.payload,
       };
-      break;
     case "TURN_OFF":
       return {
         ...state,
         speed: 0,
         lastSpeed: state.speed,
       };
-      break;
     case "TURN_ON":
-        return {
-            ...state,
-            speed: state.lastSpeed
-        }
-    default: return state
+      return {
+        ...state,
+        speed: state.lastSpeed,
+      };
+    default:
+      return state;
   }
-},initState);
-console.log(test3)
+};
+const store = createStore(reducer);
+
+console.log(store.getState()) //{ speed: 0, lastSpeed: 1 }
+store.dispatch({type: 'CHANGE_SPEED', payload: 2}) // { type: 'CHANGE_SPEED', payload: 6 }
+console.log(store.getState()) // { speed: 6, lastSpeed: 1 }
+store.dispatch({type: 'TURN_OFF'}) 
+console.log(store.getState())
+store.dispatch({type: 'TURN_ON'}) 
+console.log(store.getState())
