@@ -1,9 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import TodoApp from './component/TodoApp';
-import {useState} from 'react';
+import TodoApp from './containers/TodoApp';
 function App() {
-  const [text, setText] = useState("");
   return (
     <div className="App">
       <header className="App-header">

@@ -3,5 +3,6 @@ import todoReducer from './todo'
 
 const reducer = combineReducers({
     todo : todoReducer
-})
-export default createStore(reducer)
+});
+const store = createStore(reducer)
+export default store;
