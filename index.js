@@ -1,3 +1,5 @@
+const { createStore } = require("redux");
+
 const test = [1, 2, 3, 4].reduce((sum, num) => {
   return sum + num;
 }, 0);
@@ -22,6 +24,9 @@ const test2 = reduce(
   0
 );
 console.log(test2);
+
+//action creator
+// hard-coded string
 
 const actions = [
   { type: "CHANGE_SPEED", payload: 3 }, // speed: 3 , lastSpeed: 1
@@ -65,7 +70,6 @@ const test3 = reduce(
 );
 console.log(test3);
 
-const { createStore } = require("redux");
 
 const initState2 = {
   // la 1 State
@@ -73,21 +77,36 @@ const initState2 = {
   lastSpeed: 1,
 };
 
+
+const TURN_OFF = 'TURN_OFF';
+const TURN_ON = 'TURN_ON';
+const CHANGE_SPEED = 'CHANGE_SPEED';
+
+const turnOff = () =>({
+    type: TURN_OFF
+});
+const turnOn = () =>({
+    type: TURN_ON 
+});
+const changeSpeed = (speed) =>({
+    type: CHANGE_SPEED, payload: speed
+});
+
 const reducer = (state = initState2, action) => {
     console.log(action) // { type: '@@redux/INITe.d.6.9.k.a' }
   switch (action.type) {
-    case "CHANGE_SPEED":
+    case CHANGE_SPEED:
       return {
         ...state,
         speed: action.payload,
       };
-    case "TURN_OFF":
+    case TURN_OFF:
       return {
         ...state,
         speed: 0,
         lastSpeed: state.speed,
       };
-    case "TURN_ON":
+    case TURN_ON:
       return {
         ...state,
         speed: state.lastSpeed,
@@ -104,4 +123,8 @@ console.log(store.getState()) // { speed: 6, lastSpeed: 1 }
 store.dispatch({type: 'TURN_OFF'}) 
 console.log(store.getState())
 store.dispatch({type: 'TURN_ON'}) 
+console.log(store.getState())
+
+
+store.dispatch(changeSpeed(10))
 console.log(store.getState())
