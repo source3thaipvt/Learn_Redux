@@ -1,7 +1,17 @@
-import React, { useState } from "react";
-
-export default function TodoApp({ todos , addTodo}) {
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
+export default function TodoApp({ todos ,setTodos, addTodo}) {
   const [text, setText] = useState("");
+  useEffect(()=>{
+    // setup 	npm install -g json-server
+    // create db.json
+    // json-server --watch db.json
+    axios.get('http://localhost:3000/todos').then(res=>{
+      console.log(res.data);
+      setTodos(res.data);
+    });
+
+  },[setTodos])
   return (
     <div>
       <input
@@ -15,7 +25,7 @@ export default function TodoApp({ todos , addTodo}) {
         }}>Add</button>
       <ul>
         {todos.map((todo) => (
-          <li>{todo}</li>
+          <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
     </div>
