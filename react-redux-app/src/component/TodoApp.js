@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-export default function TodoApp({ todos , addTodo, fechtTodos}) {
+export default function TodoApp({ todos , addTodo, fetchTodos}) {
   const [text, setText] = useState("");
   useEffect(()=>{
     
-    fechtTodos()
+    fetchTodos()
 
-  },[fechtTodos])
+  },[fetchTodos])
   return (
     <div>
       <input

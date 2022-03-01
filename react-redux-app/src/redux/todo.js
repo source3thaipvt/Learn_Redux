@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 const initState = {
   items: [],
 };
@@ -12,6 +14,14 @@ export const setTodos = (items)=>({
   type: SET_TODO,
   payload: items
 })
+export const fetchTodos = () => async (dispatch) => {
+  // setup 	npm install -g json-server
+  // create db.json
+  // json-server --watch db.json
+  const res = await axios.get('http://localhost:3000/todos')
+    console.log(res.data);
+    dispatch(setTodos(res.data));
+}
  const reducer = (state = initState, action) => {
    console.log(action);
   switch (action.type) {

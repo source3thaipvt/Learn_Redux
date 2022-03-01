@@ -12,17 +12,24 @@ const reducer = combineReducers({
 //       }
 //   };
 // }
-const myMiddleware = store => next => action =>{
-    console.log('Action test', action, store.getState());
+const myMiddleware = store => next => action =>{ 
+    console.log('Action test', action,'getState', store.getState());
+    // action la 1 function
     if(action.type === 'ADD_TODO' && action.payload === 'fuck'){
         action.payload = '****'
     }
     return next(action); // truyen qua middleware tiep theo | middleware cuoi cung -> dispacth
     // dung de xu ly data tu server ve: api
 }
+const asyncMiddleware = store => next => action=>{
+  console.log('Async',action) // la 1 function
+  if(typeof action === 'function'){
+    return action(next); // truyen vao action() dispacht la next
+  }
+  return next(action)
+}
 
 export default createStore(
   reducer,
-  applyMiddleware(myMiddleware)
-  
+  applyMiddleware(myMiddleware,asyncMiddleware)
 );
