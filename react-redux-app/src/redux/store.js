@@ -45,5 +45,7 @@ const reducer = combineReducers({
 });
 
 export default configureStore({
-  reducer
+  reducer: { todo: todoReducer },
+  // add middleware custom your
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myMiddleware),
 })
