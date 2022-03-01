@@ -18,7 +18,7 @@ export const setTodos = (items)=>({
     case ADD_TODO:
       return {
         ...state,
-        items: [...state.items, action.payload],
+        items: [...state.items, {title: action.payload}],
       };
       case SET_TODO:
       return {

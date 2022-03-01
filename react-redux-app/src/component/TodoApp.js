@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from 'axios';
-export default function TodoApp({ todos ,setTodos, addTodo}) {
+
+export default function TodoApp({ todos , addTodo, fechtTodos}) {
   const [text, setText] = useState("");
   useEffect(()=>{
-    // setup 	npm install -g json-server
-    // create db.json
-    // json-server --watch db.json
-    axios.get('http://localhost:3000/todos').then(res=>{
-      console.log(res.data);
-      setTodos(res.data);
-    });
+    
+    fechtTodos()
 
-  },[setTodos])
+  },[fechtTodos])
   return (
     <div>
       <input
