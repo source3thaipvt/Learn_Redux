@@ -1,4 +1,4 @@
-import axios from 'axios';
+import callApi from '../api/callApi';
 
 const initState = {
   items: [],
@@ -18,9 +18,15 @@ export const fetchTodos = () => async (dispatch) => {
   // setup 	npm install -g json-server
   // create db.json
   // json-server --watch db.json
-  const res = await axios.get('http://localhost:3000/todos')
+  const res = await callApi(
+    'GET', 
+    'todos',
+     null
+  ).then(res=>{
     console.log(res.data);
     dispatch(setTodos(res.data));
+  })
+    
 }
  const reducer = (state = initState, action) => {
    console.log(action);

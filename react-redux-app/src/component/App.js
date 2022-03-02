@@ -1,12 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
-import TodoApp from './containers/TodoApp';
-function App() {
+import logo from '../logo.svg';
+import '../App.css';
+import TodoApp from '../containers/TodoApp';
+import Login from '../containers/Login';
+function App({auth}) {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <TodoApp todos={[]}/>
+        {/* Check token */}
+        {!auth.token && <Login/>}
+        {auth.token && <TodoApp/>}
+        
         
         <a
           className="App-link"

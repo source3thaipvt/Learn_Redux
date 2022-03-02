@@ -1,12 +1,12 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
-// giai phap thay the store redux cu||tich hop san: thunk, middleware 
+// giai phap thay the store redux cu||tich hop san: thunk, middleware
 // || code ngan gon hon
-import {configureStore} from '@reduxjs/toolkit'
-import { createLogger} from 'redux-logger';
+import { configureStore } from "@reduxjs/toolkit";
+import { createLogger } from "redux-logger";
 import todoReducer from "./todo";
+import authReducer from "./auth";
 // giai phap thay the async fetch dispatch
-import thunk from 'redux-thunk';
-
+import thunk from "redux-thunk";
 
 // function myMiddleware(store) {
 //   return function (next) {
@@ -14,15 +14,15 @@ import thunk from 'redux-thunk';
 //   };
 // }
 
-const myMiddleware = store => next => action =>{ 
-    console.log('Action test', action,'getState', store.getState());
-    // action la 1 function
-    if(action.type === 'ADD_TODO' && action.payload === 'fuck'){
-        action.payload = '****'
-    }
-    return next(action); // truyen qua middleware tiep theo | middleware cuoi cung -> dispacth
-    // dung de xu ly data tu server ve: api
-}
+const myMiddleware = (store) => (next) => (action) => {
+  console.log("Action test", action, "getState", store.getState());
+  // action la 1 function
+  if (action.type === "ADD_TODO" && action.payload === "fuck") {
+    action.payload = "****";
+  }
+  return next(action); // truyen qua middleware tiep theo | middleware cuoi cung -> dispacth
+  // dung de xu ly data tu server ve: api
+};
 
 // const asyncMiddleware = store => next => action=>{
 //   console.log('Async',action) // la 1 function
@@ -32,7 +32,7 @@ const myMiddleware = store => next => action =>{
 //   return next(action)
 // }
 
-const logger = createLogger()
+const logger = createLogger();
 
 // export default createStore(
 //   reducer,
@@ -45,7 +45,8 @@ const reducer = combineReducers({
 });
 
 export default configureStore({
-  reducer: { todo: todoReducer },
+  reducer: { todo: todoReducer, auth: authReducer },
   // add middleware custom your
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(myMiddleware),
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(myMiddleware),
+});
