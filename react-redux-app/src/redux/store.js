@@ -8,6 +8,16 @@ import authReducer from "./auth";
 // giai phap thay the async fetch dispatch
 import thunk from "redux-thunk";
 
+// Luu state redux vao store
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["auth"], // chi luu data can
+};
+
 // function myMiddleware(store) {
 //   return function (next) {
 //       return function(action){ }
@@ -42,11 +52,16 @@ const logger = createLogger();
 // Action => Store => { Middleware => Reducer => State } => View => Action
 const reducer = combineReducers({
   todo: todoReducer,
+  auth: authReducer,
 });
 
-export default configureStore({
-  reducer: { todo: todoReducer, auth: authReducer },
+const persistedReducer = persistReducer(persistConfig, reducer);
+
+const store = configureStore({
+  reducer: persistedReducer,
   // add middleware custom your
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(myMiddleware),
 });
+export const persistor = persistStore(store);
+export default store;
